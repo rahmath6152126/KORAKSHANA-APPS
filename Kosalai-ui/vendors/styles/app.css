@@ -1,0 +1,17 @@
+span.select2.select2-container.select2-container--default.select2-container--above.select2-container--focus {
+  width: 100% !important;
+}
+
+.alert.alert-dismissible.fade {
+  position: absolute;
+  z-index: 1000;
+  width: 60vh;
+  right: 10px;
+}
+.alert.alert-dismissible.fade.hide {
+  display: none;
+}
+
+.alert.alert-dismissible.fade.show {
+  display: block;
+}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>GO RAKSHANA SAMITHI</title>
+
+	<!-- Site favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/jquery-steps/jquery.steps.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/app.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/app.css">
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script src="src/scripts/jquery.min.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script src="addsponser.js"></script>
+
+</head>
+
+<body>
+	<div class="pre-loader">
+		<div class="pre-loader-box">
+			<div class="loader-logo"><img src="vendors/images/deskapp-logo.svg" alt=""></div>
+			<div class='loader-progress' id="progress_div">
+				<div class='bar' id='bar1'></div>
+			</div>
+			<div class='percent' id='percent1'>0%</div>
+			<div class="loading-text">
+				Loading...
+			</div>
+		</div>
+	</div>
+
+	<div class="header">
+		<h1 class="text-center w-100 weight-800">KO RAKSHANA SAMITHI</h1>
+	</div>
+
+	<div class="right-sidebar">
+		<div class="sidebar-title">
+			<h3 class="weight-600 font-16 text-blue">
+				Layout Settings
+				<span class="btn-block font-weight-400 font-12">User Interface Settings</span>
+			</h3>
+			<div class="close-sidebar" data-toggle="right-sidebar-close">
+				<i class="icon-copy ion-close-round"></i>
+			</div>
+		</div>
+		<div class="right-sidebar-body customscroll">
+			<div class="right-sidebar-body-content">
+				<h4 class="weight-600 font-18 pb-10">Header Background</h4>
+				<div class="sidebar-btn-group pb-30 mb-10">
+					<a href="javascript:void(0);" class="btn btn-outline-primary header-white active">White</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Dark</a>
+				</div>
+
+				<h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
+				<div class="sidebar-btn-group pb-30 mb-10">
+					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light ">White</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Dark</a>
+				</div>
+
+				<h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
+				<div class="sidebar-radio-group pb-10 mb-10">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
+							value="icon-style-1" checked="">
+						<label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebaricon-2" name="menu-dropdown-icon" class="custom-control-input"
+							value="icon-style-2">
+						<label class="custom-control-label" for="sidebaricon-2"><i class="ion-plus-round"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebaricon-3" name="menu-dropdown-icon" class="custom-control-input"
+							value="icon-style-3">
+						<label class="custom-control-label" for="sidebaricon-3"><i
+								class="fa fa-angle-double-right"></i></label>
+					</div>
+				</div>
+
+				<h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
+				<div class="sidebar-radio-group pb-30 mb-10">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-1" checked="">
+						<label class="custom-control-label" for="sidebariconlist-1"><i
+								class="ion-minus-round"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-2" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-2">
+						<label class="custom-control-label" for="sidebariconlist-2"><i class="fa fa-circle-o"
+								aria-hidden="true"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-3" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-3">
+						<label class="custom-control-label" for="sidebariconlist-3"><i class="dw dw-check"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-4" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-4" checked="">
+						<label class="custom-control-label" for="sidebariconlist-4"><i
+								class="icon-copy dw dw-next-2"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-5" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-5">
+						<label class="custom-control-label" for="sidebariconlist-5"><i
+								class="dw dw-fast-forward-1"></i></label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="sidebariconlist-6" name="menu-list-icon" class="custom-control-input"
+							value="icon-list-style-6">
+						<label class="custom-control-label" for="sidebariconlist-6"><i class="dw dw-next"></i></label>
+					</div>
+				</div>
+
+				<div class="reset-options pt-30 text-center">
+					<button class="btn btn-danger" id="reset-settings">Reset Settings</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="left-side-bar">
+		<div class="brand-logo">
+			<a href="index.html">
+				<img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
+				<img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+			</a>
+			<div class="close-sidebar" data-toggle="left-sidebar-close">
+				<i class="ion-close-round"></i>
+			</div>
+		</div>
+		<div class="menu-block customscroll">
+			<div class="sidebar-menu">
+				<ul id="accordion-menu">
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Sponser</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="addsponser.html">Add</a></li>
+							<li><a href="search.html">List</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="mobile-menu-overlay"></div>
+
+	<div class="main-container">
+		<div class="alert alert-dark alert-dismissible fade hide" role="alert">
+			<strong><label id="toast-headerName"></label></strong><label id="toast-headerName"></label>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<div>
+			<div class="min-height-200px">
+				<div class="row">
+					<div class="col-md-6 col-sm-12">
+						<div class="m-2 title">
+							<h4>Search</h4>
+						</div>
+					</div>
+				</div>
+				<div class="pd-10 card-box mb-10">
+					<div class="row">
+						<div class="col-lg-2 col-md-6 col-sm-12">
+							<div class="form-group">
+
+								<label>Type of List</label>
+								<select id="search_reminder" name="search_reminder" aria-placeholder="Reminder"
+									class="custom-select2 form-control">
+									<option value="0" selected>within 15 days</option>
+									<option value="1">ALL</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-6 col-sm-12">
+							<div class="form-group">
+								<label>Name</label>
+								<input type="text" id="search_firstName" class="form-control">
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-6 col-sm-12">
+							<div class="form-group">
+								<label>Type of Sponser<span class="text-danger">*</span></label>
+								<select id="search_sponserType" name="search_sponserType"
+									aria-placeholder="Sponser type" class="custom-select2 form-control">
+									<option value="">Type of Sponser</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-6 col-sm-12">
+							<div class="form-group">
+								<label>Type of Sponser<span class="text-danger">*</span></label>
+								<select id="search_eventType" name="search_eventType" aria-placeholder="Sponser type"
+									class="custom-select2 form-control">
+									<option value="">Type of Sponser</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-6 col-sm-12">
+							<div class="form-group">
+								<a class="btn btn-light mt-30" onclick="datableBind()"><i
+										class="text-primary fa fa-search"></i> </a>
+								<a class="btn btn-light mt-30" onclick="clearSearch()"><i
+										class="fa fa-refresh text-danger"></i> </a>
+							</div>
+						</div>
+					</div>
+					<table id="example" class="table data-table-export-ajax nowrap">
+						<thead>
+							<tr>
+								<th>S.No.</th>
+								<th>Name</th>
+								<th>Contact no.</th>
+								<th>Sponser Type</th>
+								<th>to Sponser</th>
+								<th>event Type</th>
+								<th>event Date</th>
+								<th class='notexport'>action</th>
+							</tr>
+						</thead>
+						<!-- <tfoot>
+									<tr>
+										<th>Name</th>
+										<th>Contact no.</th>
+										<th>Sponser Type</th>
+										<th>to Sponser</th>
+										<th>event Type</th>
+										<th>event Date</th>
+										<th class='notexport'>action</th>
+									</tr>
+								</tfoot> -->
+					</table>
+
+				</div>
+
+				<!-- success Popup html Start -->
+				<div class="modal fade" id="success-modal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-body text-center font-18">
+								<h3 class="mb-20">Form Submitted!</h3>
+								<div class="mb-30 text-center"><img src="vendors/images/success.png"></div>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							</div>
+							<div class="modal-footer justify-content-center">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- success Popup html End -->
+			</div>
+		</div>
+		<div class="footer-wrap pd-20 mb-20 card-box">
+			RBM RESEARCH CENTRE @2021
+		</div>
+	</div>
+	</div>
+	<!-- js -->
+	<script src="vendors/scripts/core.js"></script>
+	<script src="vendors/scripts/script.min.js"></script>
+	<script src="vendors/scripts/process.js"></script>
+	<script src="vendors/scripts/layout-settings.js"></script>
+	<script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+	<script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+	<!-- buttons for Export datatable -->
+	<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
+	<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
+	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
+	<!-- Datatable Setting js -->
+</body>
+
+</html>

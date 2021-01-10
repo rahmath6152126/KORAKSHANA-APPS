@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MeYwEE54CaovhtMvDzJbrVZ7uBOLd4T+nklx2bq8LlVe/4eJ+RoY3Pkq7Hjj73AhgENHBGAMRmzAzaMN8d7Q9Q==",
+  "dgSpecHash": "NZhxKsPHxusMC8SAebWCSuyqbb3+EolPL6m4xL0GM6VUx30/JcTk48Ho+KWtp7L71AjMpgLbF0pbj42KpPdu/A==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\KosalaiProj\\KosalaiProj.csproj",
+  "projectFilePath": "D:\\Projects\\KORAKSHANA-APPS\\KosalaiProj\\GORAKSHANA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DHANSA\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\DHANSA\\.nuget\\packages\\microsoft.aspnetcore.authorization\\1.0.3\\microsoft.aspnetcore.authorization.1.0.3.nupkg.sha512",

@@ -7010,11 +7010,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\KosalaiProj\\KosalaiProj.csproj",
-      "projectName": "KosalaiProj",
-      "projectPath": "D:\\Projects\\KosalaiProj\\KosalaiProj.csproj",
+      "projectUniqueName": "D:\\Projects\\KORAKSHANA-APPS\\KosalaiProj\\GORAKSHANA.csproj",
+      "projectName": "GORAKSHANA",
+      "projectPath": "D:\\Projects\\KORAKSHANA-APPS\\KosalaiProj\\GORAKSHANA.csproj",
       "packagesPath": "C:\\Users\\DHANSA\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\KosalaiProj\\obj\\",
+      "outputPath": "D:\\Projects\\KORAKSHANA-APPS\\KosalaiProj\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DHANSA\\AppData\\Roaming\\NuGet\\NuGet.Config"

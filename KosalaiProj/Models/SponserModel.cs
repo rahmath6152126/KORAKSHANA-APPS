@@ -2,15 +2,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Sharedmodels;
 
-namespace DBModel
+namespace GORAKSHANA.Models
 {
-    public class SponserModel
+    public class SponserModel : DataBaseModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+
 
         public string code { get; set; }
 

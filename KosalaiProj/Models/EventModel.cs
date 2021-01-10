@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Common.Models;
 
-namespace Sharedmodels
+namespace GORAKSHANA.Models
 {
     public class EventModel
     {

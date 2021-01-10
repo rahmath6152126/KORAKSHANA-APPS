@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Models;
 
-namespace Sharedmodels
+namespace GORAKSHANA.Models
 {
     public class MasterList
     {

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sharedmodels
+namespace GORAKSHANA.Models
 {
     public class ReminderModel
     {

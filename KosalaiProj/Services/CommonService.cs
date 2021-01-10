@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Models;
+using GORAKSHANA.Models;
 
-namespace Common.Services
+namespace GORAKSHANA.Services
 {
     public class CommonService
     {

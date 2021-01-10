@@ -1,4 +1,4 @@
-namespace GORAKSHANA.Models
+namespace Common.Models
 {
     public class DatabaseSettings : IDatabaseSettings
     {

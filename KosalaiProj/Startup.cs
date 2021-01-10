@@ -1,6 +1,6 @@
 using System.Net;
-using GORAKSHANA.Models;
-using GORAKSHANA.Services;
+using Common.Models;
+using KosalaiProj.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -9,11 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using GORAKSHANA.IServices;
-using Microsoft.AspNetCore.Authentication;
-using GORAKSHANA.Helpers;
+using Services;
 
-namespace GORAKSHANA
+namespace KosalaiProj
 {
     public class Startup
     {
@@ -28,8 +26,17 @@ namespace GORAKSHANA
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.Configure<IISOptions>(x => x.AutomaticAuthentication = false);
+            // requires using Microsoft.Extensions.Options
+            services
+                .Configure<DatabaseSettings>(Configuration
+                    .GetSection(nameof(DatabaseSettings)));
 
+            services
+                .AddSingleton<IDatabaseSettings>(sp =>
+                    sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
+            services.AddTransient<ISponserServices, SponserServices>();
             services
                 .AddCors(x =>
                 {
@@ -42,28 +49,8 @@ namespace GORAKSHANA
                                 .AllowAnyHeader());
                 });
 
-
-            services.AddControllers();
-
-            // configure basic authentication 
-
- 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
-            // requires using Microsoft.Extensions.Options
-            services
-                .Configure<DatabaseSettings>(Configuration
-                    .GetSection(nameof(DatabaseSettings)));
- // configure strongly typed settings object
-
-            services
-                .AddSingleton<IDatabaseSettings>(sp =>
-                    sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-            AuthenticationBuilder authenticationBuilder = services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("BasicAuthentication", null);
-
-            services.AddScoped<ISponserServices<SponserModel>, SponserServices>();
-
             services.AddSwaggerDocument();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

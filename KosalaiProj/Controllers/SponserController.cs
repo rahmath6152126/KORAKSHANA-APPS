@@ -1,39 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GORAKSHANA.Models;
+using System.Threading.Tasks;
+using Common.Models;
+using DBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using GORAKSHANA.IServices;
-using MongoDB.Driver;
-using Microsoft.AspNetCore.Authorization;
+using Services;
+using Sharedmodels;
 
-namespace GORAKSHANA.Controllers
+namespace KosalaiProj.Controllers
 {
-    
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SponserController : ControllerBase
     {
         private readonly ILogger<SponserController> _logger;
 
-        private readonly ISponserServices<SponserModel> _service;
+        private readonly ISponserServices _service;
 
         public SponserController(
             ILogger<SponserController> logger,
-            ISponserServices<SponserModel> sponserService
+            ISponserServices sponserService
         )
         {
             _logger = logger;
             _service = sponserService;
         }
-        private string GenrateCode()
-        {
-            var len = _service.GetList().Count() + 1;
 
-            return $"{_service.Codeprefix  }{_service.Appefix + len}";
-        }
         [HttpPost("Add")]
         public ActionResult Add([FromBody] SponserModel model)
         {
@@ -44,52 +38,28 @@ namespace GORAKSHANA.Controllers
             _logger
                 .LogInformation($"Add called - {model.firstName} - {model.lastName}");
             SponserModel result = null;
-            FilterDefinition<SponserModel> filter;
             if (!string.IsNullOrEmpty(model?.Id))
             {
                 _logger.LogInformation($"Id - {model.Id}");
-                filter = _service.Builder.Eq(nameof(SponserModel.Id), model.Id);
-                result = _service.Get(filter);
+                result = _service.Get(model.Id);
                 _logger.LogInformation($"Id - {result.code}");
             }
-            if (result == null)
-            {
-                model.code =
-                  string.IsNullOrEmpty(model.code) ? GenrateCode() : model.code;
-                if (
-                _service.GetList(_service.Builder.Eq(nameof(SponserModel.code), model.code))
-                        .ToList()
-                        .Count() ==
-                    0
-                )
-                {
-                    _service.Create(model);
-                    return Ok();
-                }
-                else
-                {
-                    throw new DuplicateWaitObjectException(nameof(SponserModel.code));
-                }
-            }
 
+            if (result == null)
+                _service.Create(model);
             else
             {
                 model.code = result.code;
-                var updateFilter = Builders<SponserModel>.Filter.Eq(nameof(SponserModel.Id), model.Id);
-                var arrayUpdate = Builders<SponserModel>.Update.Set(nameof(SponserModel.firstName), model.firstName);
-                arrayUpdate.Set(nameof(SponserModel.lastName), model.lastName);
-                _service.Update(updateFilter, arrayUpdate);
-
-
-                return Ok(true);
+                _service.Update(model.Id, model);
             }
+
+            return Ok(true);
         }
 
         [HttpDelete("Delete")]
         public ActionResult Delete(string id)
         {
-            var filter = Builders<SponserModel>.Filter.Eq(nameof(SponserModel.Id), id);
-            _service.Remove(filter, _service.Get(filter));
+            _service.Remove(id);
             return Ok();
         }
 

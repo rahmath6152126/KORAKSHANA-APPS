@@ -30,7 +30,7 @@
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script src="src/scripts/jquery.min.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-	<script src="addsponser.js"></script>
+
 
 </head>
 
@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="header">
-		<h1 class="text-center w-100 weight-800">KO RAKSHANA SAMITHI</h1>
+		<h1 class="text-center w-100 weight-800">GORAKSHANA SAMITHI</h1>
 	</div>
 
 	<div class="right-sidebar">
@@ -170,12 +170,12 @@
 	<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
-		<div class="alert alert-dark alert-dismissible fade hide" role="alert">
-			<strong><label id="toast-headerName"></label></strong><label id="toast-headerName"></label>
+		<!-- <div class="alert alert-dark alert-dismissible fade" role="alert">
+			<strong><label id="toast-title"></label></strong><label id="toast-message"></label>
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">×</span>
 			</button>
-		</div>
+		</div> -->
 		<div>
 			<div class="min-height-200px">
 				<div class>
@@ -193,37 +193,71 @@
 							<h5>Personal Info</h5>
 							<section>
 								<div class="row">
-									<div class="col-md-3">
-										<div class="form-group">
-											<label>First name<span class="text-danger">*</span></label>
-											<input type="text" id="txtfirstName" placeholder="First name"
-												name="txtfirstName" class="form-control">
-											<span></span>
+									<div class="col-md-9">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Reg.number<span class="text-danger">*</span></label>
+													<input type="text" id="txtRegNumber" disabled placeholder="auto generate"
+														name="txtRegNumber" class="form-control disabled-icon ">
+													<span></span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Reg Date<span class="text-danger">*</span></label>
+													<input type="text" id="regDate" name="regDate"
+														class="form-control date-picker" placeholder="Registration Date"
+														data-date-format="dd MM yyyy">
+												</div>
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>First name<span class="text-danger">*</span></label>
+													<input type="text" id="txtfirstName" placeholder="First name"
+														name="txtfirstName" class="form-control">
+													<span></span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Last name<span class="text-danger">*</span></label>
+													<input type="text" id="txtlastName" name="txtlastName"
+														placeholder="Last name" class="form-control">
+												</div>
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Contact no.<span class="text-danger">*</span></label>
+													<input type="number" id="txtContactno" name="txtContactno"
+														placeholder="Contact no." class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Sec. Contact no.</label>
+													<input type="number" id="txtSecondaryContactno"
+														placeholder="Sec. Contact no." name="txtSecondaryContactno"
+														class="form-control">
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label>Last name<span class="text-danger">*</span></label>
-											<input type="text" id="txtlastName" name="txtlastName"
-												placeholder="Last name" class="form-control">
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label>Contact no.<span class="text-danger">*</span></label>
-											<input type="number" id="txtContactno" name="txtContactno"
-												placeholder="Contact no." class="form-control">
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label>Sec. Contact no.</label>
-											<input type="number" id="txtSecondaryContactno"
-												placeholder="Sec. Contact no." name="txtSecondaryContactno"
-												class="form-control">
+											<img id="img-profile" src="src/images/default-image.jpg"
+												class="img-thumbnail ml-4 profile-photo">
+											<input id="imgInp" class="form-control form-control-sm" type="file" accept="image/*">
 										</div>
 									</div>
 								</div>
+
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
@@ -236,18 +270,28 @@
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label>to Sponser</label>
+											<label for="txtrelation">Relation</label>
+											<input type="text" id="txtrelation" placeholder="To Sponser name" disabled
+												name="txtrelation" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="txtsponserName">Name</label>
 											<input type="text" id="txtsponserName" placeholder="To Sponser name"
 												disabled name="txtsponserName" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label>to Sponser contact</label>
+											<label>Contact</label>
 											<input type="text" id="txtsponserContact" placeholder="To Sponser Contact"
 												disabled name="txtsponserContact" class="form-control">
 										</div>
 									</div>
+
+								</div>
+								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label>Event Type</label>
@@ -256,79 +300,139 @@
 											</select>
 										</div>
 									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Event Date</label>
+											<input type="text" id="eventDate" class="form-control date-picker"
+												placeholder="event Date" data-date-format="dd MM yyyy">
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Tamil year</label>
+											<select id="tamil_yr" name="tamil_yr" aria-placeholder="Tamil year"
+												class="custom-select2 form-control">
+												<option value="">Choose Tamil year</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Tamil month</label>
+											<select id="tamil_month" name="tamil_month" aria-placeholder="Tamil month"
+												class="custom-select2 form-control">
+												<option value="">Choose Tamil month</option>
+											</select>
+										</div>
+									</div>
+
 								</div>
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Event Date</label>
-												<input type="text" id="eventDate" class="form-control date-picker"
-													placeholder="event Date" data-date-format="dd MM yyyy">
-											</div>
+											<label>Star</label>
+											<select id="startname" name="startname" aria-placeholder="Star name"
+												class="custom-select2 form-control">
+												<option value="">Choose star</option>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Tamil year</label>
-												<select id="tamil_yr" name="tamil_yr" aria-placeholder="Tamil year"
-													class="custom-select2 form-control">
-													<option value="">Choose Tamil year</option>
-												</select>
-											</div>
+											<label>Patcam</label>
+											<select id="patcamname" name="patcamname" aria-placeholder="patcam"
+												class="custom-select2 form-control">
+												<option value="">Choose Patcam</option>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Tamil month</label>
-												<select id="tamil_month" name="tamil_month"
-													aria-placeholder="Tamil month" class="custom-select2 form-control">
-													<option value="">Choose Tamil month</option>
-												</select>
-											</div>
+											<label>Tithi</label>
+											<select id="tithi" name="tithi" aria-placeholder="patcam"
+												class="custom-select2 form-control">
+												<option value="">Choose Tithi</option>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Star</label>
-												<select id="startname" name="startname" aria-placeholder="Star name"
-													class="custom-select2 form-control">
-													<option value="">Choose star</option>
-												</select>
-											</div>
+											<label>Gotra</label>
+											<input type="text" id="gotraname" name="gotraname" class="form-control"
+												placeholder="Gotra">
 										</div>
 									</div>
 								</div>
 								<div class="row">
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Reference Type</label>
+													<select id="txtreftype" name="txtreftype"
+														aria-placeholder="Star name"
+														class="custom-select2 form-control">
+														<option value="">Reference Type</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Reference</label>
+													<input type="text" id="txtrefname" name="txtrefname"
+														class="form-control" placeholder="Reference name">
+												</div>
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>Email</label>
+													<input type="text" id="txtemail" name="txtemail"
+														class="form-control" placeholder="email">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Address</label>
+											<textarea id="txtaddress" name="txtaddress" class="form-control"
+												placeholder="Address"></textarea>
+										</div>
+									</div>
+
+								</div>
+								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Patcam</label>
-												<select id="patcamname" name="patcamname" aria-placeholder="patcam"
-													class="custom-select2 form-control">
-													<option value="">Choose Patcam</option>
-												</select>
-											</div>
+											<label>Payment Mode</label>
+											<select id="paymentMode" name="startname" aria-placeholder="Star name"
+												class="custom-select2 form-control">
+												<option value="">Payment mode</option>
+											</select>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Tithi</label>
-												<input type="text" id="tithiname" name="tithiname" class="form-control"
-													placeholder="Tithi">
-											</div>
+											<label>Cheque No. / Trancaction no.</label>
+											<input type="text" id="txttransactionno" name="txttransactionno"
+												class="form-control" placeholder="Cheque No. / Trancaction no.">
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<div class="form-group">
-												<label>Gotra</label>
-												<input type="text" id="gotraname" name="gotraname" class="form-control"
-													placeholder="Gotra">
-											</div>
+											<label>Bank name / Transaction name</label>
+											<input type="text" id="txttransactionname" name="txttransactionname"
+												class="form-control" placeholder="Bank name / Transaction name">
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Amount Received</label>
+											<input type="number" id="txtamount" name="txtamount" class="form-control"
+												placeholder="Amount Received">
 										</div>
 									</div>
 								</div>
@@ -337,13 +441,6 @@
 							<h5>Reminder Details</h5>
 							<section>
 								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group">
-											<label>English Date</label>
-											<input type="text" id="eng_date" class="form-control date-picker"
-												placeholder="English Date">
-										</div>
-									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Tamil Date</label>
@@ -421,6 +518,9 @@
 	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
 	<script src="src/plugins/jquery-steps/jquery.steps.js"></script>
 	<script src="vendors/scripts/steps-setting.js"></script>
+	<script src="vendors/scripts/app.js"></script>
+	<script src="addsponser.js"></script>
+
 </body>
 
 </html>

@@ -1,8 +1,9 @@
-var requestURL = '/api/Sponser';
+var requestURL = `${API_URL}/Sponser`;
 
 var SponserModel = class model {
   constructor() {
     this.id = localStorage.getItem("id");
+    localStorage.removeItem("id");
   }
   id = ''
   code = ''
@@ -14,13 +15,13 @@ var SponserModel = class model {
   toSponsername = ''
   toSponserContactno = ''
   photo_path = ''
-  event_data = {}
   reminder = []
 
   init() {
     var self = this;
-    if (this.id !== undefined) {
+    if (this.id !== undefined && this.id != '' && this.id != null) {
       this.ajaxGet(`${requestURL}/GetbyId/${self.id}`, res => {
+        //Personal info
         $('#txtfirstName').val(res.firstName);
         $('#txtlastName').val(res.lastName);
         $('#txtContactno').val(res.pri_contact_no);
@@ -28,17 +29,30 @@ var SponserModel = class model {
         $('#sponserType').val(res.sponser_Type).change();
         $('#txtsponserName').val(res.toSponsername);
         $('#txtsponserContact').val(res.toSponserContactno);
-        // "event_data": {
-        $('#eventType').val(res.event_data.evt_type).change();
-        $('#eventDate').val(moment(new Date(res.event_data.event_date)).format('DD MMM YYYY'));
-        $('#tamil_yr').val(res.event_data.tamil_yr).change();
-        $('#tamil_month').val(res.event_data.tamil_month).change();
-        $('#startname').val(res.event_data.starname).change();
-        $('#patcamname').val(res.event_data.patcamname).change();
-        $('#tithiname').val(res.event_data.tithiname);
-        $('#gotraname').val(res.event_data.gotraname);
-        vmSponserModel.reminder = res.reminder.map(x => { x.eng_date = new Date(x.eng_date); return x; });
+        $('#regDate').val(moment(new Date(res.regDate)).format('DD MMM YYYY'));
+        //Event details
+        $('#eventType').val(res.evt_type).change();
+        $('#eventDate').val(moment(new Date(res.event_date)).format('DD MMM YYYY'));
+        $('#tamil_yr').val(res.tamil_yr).change();
+        $('#tamil_month').val(res.tamil_month).change();
+        $('#startname').val(res.starname).change();
+        $('#patcamname').val(res.patcamname).change();
+        $('#tithiname').val(res.tithiname).change();
+        $('#gotraname').val(res.gotraname);
+        //Payment details
+        $('#paymentMode').val(res.paymentMode).change();
+        $('#txttransactionno').val(res.transactionno);
+        $('#txttransactionname').val(res.transactionname);
+        $('#txtamount').val(res.amount);
+        //Reference details
+        $('#txtreftype').val(res.refType).change();
+        $('#txtrefname').val(res.refname);
+        $('#txtemail').val(res.email);
+        $('#txtaddress').val(res.address);
+        $('#img-profile').attr('src', res.photo_path);
+        vmSponserModel.reminder = res.reminder.map(x => { x.tamilDate = new Date(x.tamilDate); return x; });
         vmSponserModel.bindTbodyTemplate();
+        $('#txtRegNumber').val(res.code);
         $('#pageid').html(`Edit Sponser ( ${res.code} )`);
       });
     }
@@ -52,19 +66,27 @@ var SponserModel = class model {
     return this[name]
   }
   pushReminder() {
-    var englishDate = $('#eng_date').val();
+    debugger;
     var tamilDate = $('#tamil_date').val();
-    if (englishDate === undefined && englishDate == "") {
+
+    if (tamilDate === undefined || tamilDate == "") {
 
       return false;
     }
-    else if (tamilDate === undefined && tamilDate == "")
-      return false;
-    var data = { 'eng_date': new Date(englishDate), 'tamil_date': tamilDate };
+
+    var tdate = moment(new Date(tamilDate));
+    var data = { 'engDate': tdate.format('YYYY'), 'tamilDate': tdate.format('DD MMM YYYY') };
     this.reminder.push(data);
     this.bindTbodyTemplate();
     $('#eng_date').val('');
     $('#tamil_date').val('');
+  }
+  row_click = (e) => {
+    var index = vmSponserModel.reminder.find(x => x.Slno == $(e.currentTarget).attr('data-value'));
+    if (index !== undefined) {
+      vmSponserModel.reminder.remove(index);
+      vmSponserModel.bindTbodyTemplate();
+    }
   }
   bindTbodyTemplate() {
     var self = this;
@@ -72,15 +94,8 @@ var SponserModel = class model {
     var i = 1;
     this.reminder.forEach(element => {
       element.Slno = i++;
-      var html = `<tr data-value="${element.Slno}"><td>${element.Slno}</td><td>${moment(element.eng_date).format('DD MMM YYYY')}</td><td>${element.tamil_date}</td><td></a><a  class="remove"><i class="fa fa-trash"></i>Remove</a></td></tr>`
+      var html = `<tr data-value="${element.Slno}"><td>${element.Slno}</td><td>${element.engDate}</td><td>${element.tamilDate}</td><td></a><a click="${self.row_click(this)}" class="remove"><i class="fa fa-trash"></i>Remove</a></td></tr>`
       $('#reminder tbody').append(html);
-    });
-    $('#reminder tbody tr').on('click', (e) => {
-      var index = vmSponserModel.reminder.find(x => x.Slno == $(e.currentTarget).attr('data-value'));
-      if (index !== undefined) {
-        vmSponserModel.remove(index);
-        vmSponserModel.bindTbodyTemplate();
-      }
     });
   }
 
@@ -132,11 +147,10 @@ var SponserModel = class model {
 }
 
 function clearSearch() {
-  $('#search_firstName').val('');
-  $('#search_sponserType').val('').change();
-  $('#search_eventType').val('').change();
+  $('form').find('input,select').each((e, a) => { $(a).val('').change() });
+  // $('form').find('select').each((e, a) => { $(a).val('').change() });
+  $('#img-profile').attr('src', 'src/images/default-image.jpg');
   datableBind();
-
 }
 
 var vmSponserModel = new SponserModel();
@@ -157,6 +171,7 @@ var columns = [
 var Submit = (e) => {
   var params = {
     "id": vmSponserModel.id,
+    "code": $('#txtRegNumber').val(),
     "firstName": $('#txtfirstName').val(),
     "lastName": $('#txtlastName').val(),
     "pri_contact_no": $('#txtContactno').val(),
@@ -165,21 +180,32 @@ var Submit = (e) => {
     "toSponsername": $('#txtsponserName').val(),
     "toSponserContactno": $('#txtsponserContact').val(),
     "photo_path": "string",
-    "event_data": {
-      "evt_type": $('#eventType').val(),
-      "event_date": new Date(),//$('#eventDate').val()
-      "tamil_yr": $('#tamil_yr').val(),
-      "tamil_month": $('#tamil_month').val(),
-      "starname": $('#startname').val(),
-      "patcamname": $('#patcamname').val(),
-      "tithiname": $('#tithiname').val(),
-      "gotraname": $('#gotraname').val()
-    },
-    "reminder": vmSponserModel.reminder
+    "evt_type": $('#eventType').val(),
+    "event_date": new Date($('#eventDate').val()),
+    "tamil_yr": $('#tamil_yr').val(),
+    "tamil_month": $('#tamil_month').val(),
+    "starname": $('#startname').val(),
+    "patcamname": $('#patcamname').val(),
+    "tithiname": $('#tithiname').val(),
+    "gotraname": $('#gotraname').val(),
+    "regDate": new Date($('#regDate').val()),
+    "photo_path": $('#img-profile').attr('src'),
+    "relation": $('#txtrelation').val(),
+    "paymentMode": $('#paymentMode').val(),
+    "transactionno": $('#txttransactionno').val(),
+    "transactionname": $('#txttransactionname').val(),
+    "amount": $('#txtamount').val(),
+    "address": $('#txtaddress').val(),
+    "email": $('#txtemail').val(),
+    "refname": $('#txtrefname').val(),
+    "reftype": $('#txtreftype').val(),
+    "reminder": vmSponserModel.reminder.map(x => {
+      x.tamilDate = new Date(x.tamilDate);
+      return x;
+    })
   };
   vmSponserModel.ajaxPost(`${requestURL}/Add`, params, (res, status) => {
-
-    if (res == 'true') {
+    if (res === true) {
       alert("Successfully saved");
       localStorage.clear();
       location.reload();
@@ -187,79 +213,106 @@ var Submit = (e) => {
     else {
       alert("Error on page please check admin");
     }
-
   });
 
 }
 
 function datableBind() {
-  $.ajax({
-    url: `${requestURL}/Search/${$('#search_reminder').val()}`,
-    type: "POST",
-    dataType: "json",
-    contentType: 'application/json',
-    data: JSON.stringify(vmSponserModel.filter()),
-    success: (res) => {
-      if ($.fn.DataTable.isDataTable('#example')) {
-        $('#example').DataTable().destroy();
-      }
-      var i = 0;
-      var List = res.map(x => { x.evetDate = moment(new Date(x.evetDate)).format('DD MMM YYYY'); x.slNo = ++i; x.action = `<a class="datatable-edit p-2" data-value="${x.id}"><i class="fa fa-edit text-primary"></i></a><a data-value="${x.id}" class="datatable-remove p-2"><i class="fa text-danger fa-trash"></i></a>`; return x; })
-      $('#example tbody').empty();
+  if ($('#search_reminder').val() !== undefined) {
+    $.ajax({
+      url: `${requestURL}/Search/${$('#search_reminder').val()}`,
+      type: "POST",
+      dataType: "json",
+      contentType: 'application/json',
+      data: JSON.stringify(vmSponserModel.filter()),
+      success: (res) => {
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
+        }
+        var i = 0;
+        var List = res.map(x => { x.evetDate = moment(new Date(x.evetDate)).format('DD MMM YYYY'); x.slNo = ++i; x.action = `<a class="datatable-edit p-2" data-value="${x.id}"><i class="fa fa-edit text-primary"></i></a><a data-value="${x.id}" class="datatable-remove p-2"><i class="fa text-danger fa-trash"></i></a>`; return x; })
+        $('#example tbody').empty();
 
-      $('#example').DataTable({
-        data: List,
-        scrollCollapse: true,
-        autoWidth: false,
-        responsive: true,
-        columnDefs: [{
-          targets: "datatable-nosort",
-          orderable: false,
-        }],
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        "language": {
-          "info": "_START_-_END_ of _TOTAL_ entries",
-          searchPlaceholder: "Search",
-          paginate: {
-            next: '<i class="ion-chevron-right"></i>',
-            previous: '<i class="ion-chevron-left"></i>'
-          }
-        },
-        columns: columns,
-        dom: 'Bfrtp',
-        buttons: [
-          'copy', 'csv', 'pdf', 'print'
-        ]
-      });
-
-      $('#example tbody td a.datatable-edit').on('click', (e) => {
-        debugger;
-        localStorage.setItem("id", $(e.currentTarget).attr('data-value'));
-        window.location.href = 'addsponser.html';
-
-      });
-      $('#example tbody td a.datatable-remove').on('click', (e) => {
-        $.ajaxGet(`${requestURL}/Delete?id=${$(e.currentTarget).attr('data-value')}`, (res) => {
-          location.reload();
+        $('#example').DataTable({
+          data: List,
+          scrollCollapse: true,
+          autoWidth: false,
+          responsive: true,
+          columnDefs: [{
+            targets: "datatable-nosort",
+            orderable: false,
+          }],
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          "language": {
+            "info": "_START_-_END_ of _TOTAL_ entries",
+            searchPlaceholder: "Search",
+            paginate: {
+              next: '<i class="ion-chevron-right"></i>',
+              previous: '<i class="ion-chevron-left"></i>'
+            }
+          },
+          columns: columns,
+          dom: 'Bfrtp',
+          buttons: [
+            'copy', 'csv', 'pdf', 'print'
+          ]
         });
-      });
-    }
-  });
+
+        $('#example tbody td a.datatable-edit').on('click', (e) => {
+          debugger;
+          localStorage.setItem("id", $(e.currentTarget).attr('data-value'));
+          window.location.href = 'addsponser.html';
+
+        });
+        $('#example tbody td a.datatable-remove').on('click', (e) => {
+          $.ajaxGet(`${requestURL}/Delete?id=${$(e.currentTarget).attr('data-value')}`, (res) => {
+            location.reload();
+          });
+        });
+      }
+    });
+  }
 }
 $(document).ready(function () {
 
   var isMasterloaded = false;
-
-  vmSponserModel.ajaxGet(`${requestURL}/GetMaster`, (res) => {
-
+  $("#imgInp").change(function () {
     debugger;
+    var fd = new FormData();
+
+
+    // Check file selected or not
+    if (this.files.length > 0) {
+      fd.append('model', this.files[0]);
+
+      $.ajax({
+        url: `${requestURL}/AddFile`,
+        data: fd,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (response) {
+          if (response != 0) {
+            $('#img-profile').attr("src", response);
+          } else {
+            alert('file not uploaded');
+          }
+        },
+      });
+    }
+  });
+
+  $('#img-profile').attr('src', 'src/images/default-image.jpg');
+
+  vmSponserModel.ajaxGet(`${requestURL}/AllMaster`, (res) => {
+
     if (res !== undefined) {
       isMasterloaded = true;
       var List = [];
       // Sponser type loaded.
-      if (res.sponserList !== undefined) {
+      if (res.sponserType !== undefined) {
 
-        List = res.sponserList.map(x => {
+        List = res.sponserType.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
 
@@ -269,9 +322,9 @@ $(document).ready(function () {
       }
 
       // Event type loaded.
-      if (res.eventList !== undefined) {
+      if (res.eventType !== undefined) {
 
-        List = res.eventList.map(x => {
+        List = res.eventType.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
         $('#search_eventType').append(List);
@@ -279,9 +332,9 @@ $(document).ready(function () {
 
       }
       // Tamil list
-      if (res.tamilYearList !== undefined) {
+      if (res.tamilYr !== undefined) {
 
-        List = res.tamilYearList.map(x => {
+        List = res.tamilYr.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
 
@@ -289,9 +342,9 @@ $(document).ready(function () {
 
       }
       // Tamil month
-      if (res.tamilMonthList !== undefined) {
+      if (res.tamilMon !== undefined) {
 
-        List = res.tamilMonthList.map(x => {
+        List = res.tamilMon.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
 
@@ -299,29 +352,62 @@ $(document).ready(function () {
 
       }
       //Star list 
-      if (res.starList !== undefined) {
+      if (res.star !== undefined) {
 
-        List = res.starList.map(x => {
+        List = res.star.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
 
         $('#startname').append(List);
 
       }
+      if (res.thithi !== undefined) {
+
+        List = res.thithi.map(x => {
+          return `<option value="${x}">${x}</option>`;
+        });
+
+        $('#tithi').append(List);
+
+      }
 
       //Star list 
-      if (res.patcamList !== undefined) {
+      if (res.Patcam !== undefined) {
 
-        List = res.patcamList.map(x => {
+        List = res.Patcam.map(x => {
           return `<option value="${x}">${x}</option>`;
         });
 
         $('#patcamname').append(List);
 
       }
+
+      //Star list 
+      if (res.paymentMode !== undefined) {
+
+        List = res.paymentMode.map(x => {
+          return `<option value="${x}">${x}</option>`;
+        });
+
+        $('#paymentMode').append(List);
+
+      }
+
+      //Star list 
+      if (res.referenceType !== undefined) {
+
+        List = res.referenceType.map(x => {
+          return `<option value="${x}">${x}</option>`;
+        });
+
+        $('#txtreftype').append(List);
+
+      }
     }
 
   });
+
+
 
   $('#btnAdd').on('click', (e) => {
     console.log(e);
@@ -330,6 +416,7 @@ $(document).ready(function () {
   });
 
   $('#sponserType').on('change', (e) => {
+    $('#txtrelation').attr('disabled', $(e.currentTarget).val() === 'myself');
     $('#txtsponserName').attr('disabled', $(e.currentTarget).val() === 'myself');
     $('#txtsponserContact').attr('disabled', $(e.currentTarget).val() === 'myself');
   });
@@ -337,8 +424,8 @@ $(document).ready(function () {
 
   $('#eventType').on('change', (e) => {
     $('#patcamname').attr('disabled', $(e.currentTarget).val() === 'Birthday');
-    $('#startname').attr('disabled', $(e.currentTarget).val() !== 'Birthday');
-    $('#tithiname').attr('disabled', $(e.currentTarget).val() === 'Birthday');
+    $('#startname').attr('disabled', $(e.currentTarget).val() === 'Remembrance');
+    $('#tithi').attr('disabled', $(e.currentTarget).val() === 'Birthday');
   });
 
 

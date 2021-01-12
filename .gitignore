@@ -3,3 +3,7 @@
 .sass-cache/
 .npmignore
 ../bin
+bin
+.vscode
+obj
+Properties

@@ -81,12 +81,10 @@ var SponserModel = class model {
     $('#eng_date').val('');
     $('#tamil_date').val('');
   }
+
   row_click = (e) => {
-    var index = vmSponserModel.reminder.find(x => x.Slno == $(e.currentTarget).attr('data-value'));
-    if (index !== undefined) {
-      vmSponserModel.reminder.remove(index);
-      vmSponserModel.bindTbodyTemplate();
-    }
+    vmSponserModel.reminder = vmSponserModel.reminder.filter(x => x.Slno != $(e).attr('data-value'));
+    vmSponserModel.bindTbodyTemplate();
   }
   bindTbodyTemplate() {
     var self = this;
@@ -94,7 +92,7 @@ var SponserModel = class model {
     var i = 1;
     this.reminder.forEach(element => {
       element.Slno = i++;
-      var html = `<tr data-value="${element.Slno}"><td>${element.Slno}</td><td>${element.engDate}</td><td>${element.tamilDate}</td><td></a><a click="${self.row_click(this)}" class="remove"><i class="fa fa-trash"></i>Remove</a></td></tr>`
+      var html = `<tr><td>${element.Slno}</td><td>${element.engDate}</td><td>${element.tamilDate}</td><td></a><a onclick="vmSponserModel.row_click(this)"  data-value="${element.Slno}" class="remove"><i class="fa fa-trash"></i>Remove</a></td></tr>`
       $('#reminder tbody').append(html);
     });
   }
@@ -145,7 +143,12 @@ var SponserModel = class model {
     }
   }
 }
-
+function DateChange() {
+  if ($('#eventDate').val().length > 0) {
+    var result = moment(new Date($('#eventDate').val())).format('DD/MM/YYYY')
+    $('#display_eventdate').val(result);
+  }
+}
 function clearSearch() {
   $('form').find('input,select').each((e, a) => { $(a).val('').change() });
   // $('form').find('select').each((e, a) => { $(a).val('').change() });
@@ -304,8 +307,12 @@ $(document).ready(function () {
 
   $('#img-profile').attr('src', 'src/images/default-image.jpg');
 
-  vmSponserModel.ajaxGet(`${requestURL}/AllMaster`, (res) => {
+  $('#img-profile').attr('src', 'src/images/default-image.jpg');
 
+  vmSponserModel.ajaxGet(`${requestURL}/AllMaster`, (result) => {
+
+    var res = result.list;
+    $('#txtRegNumber').val(result.code);
     if (res !== undefined) {
       isMasterloaded = true;
       var List = [];
@@ -416,6 +423,7 @@ $(document).ready(function () {
   });
 
   $('#sponserType').on('change', (e) => {
+
     $('#txtrelation').attr('disabled', $(e.currentTarget).val() === 'myself');
     $('#txtsponserName').attr('disabled', $(e.currentTarget).val() === 'myself');
     $('#txtsponserContact').attr('disabled', $(e.currentTarget).val() === 'myself');
@@ -423,6 +431,7 @@ $(document).ready(function () {
 
 
   $('#eventType').on('change', (e) => {
+    DateChange();
     $('#patcamname').attr('disabled', $(e.currentTarget).val() === 'Birthday');
     $('#startname').attr('disabled', $(e.currentTarget).val() === 'Remembrance');
     $('#tithi').attr('disabled', $(e.currentTarget).val() === 'Birthday');

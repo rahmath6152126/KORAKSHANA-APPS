@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using GORAKSHANA.IService;
 using GORAKSHANA.Models;
-using GORAKSHANA.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -60,7 +58,17 @@ namespace GORAKSHANA.Controllers
         }
 
         [HttpGet("AllMaster")]
-        public Dictionary<string, List<string>> AllMaster() => _service.GetDataSourceTypes();
+        public ActionResult AllMaster()
+        {
+            var result = new
+            {
+                Code = _service.GenrateCode(),
+                List = _service.GetDataSourceTypes()
+            };
+            return Ok(result);
+
+
+        }
 
         [HttpPost("AddFile")]
         public string AddFile(IFormFile model)
@@ -79,8 +87,7 @@ namespace GORAKSHANA.Controllers
 
             if (model.FileName != null)
             {
-                string uploadsFolder =
-                    Path.Combine(Directory.GetCurrentDirectory(), "images");
+                string uploadsFolder = Path.Combine("F:\\KORAKSHANA-SOFTWARE\\wwwroot\\ui", "images");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.FileName;
                 filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (
@@ -90,7 +97,7 @@ namespace GORAKSHANA.Controllers
                     model.CopyTo(fileStream);
                 }
             }
-            return filePath;
+            return $"/UI/images/{uniqueFileName}";
         }
 
         [HttpGet("GetList")]

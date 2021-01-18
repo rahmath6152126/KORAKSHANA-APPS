@@ -1,4 +1,5 @@
-var API_URL = "http://localhost:5003"
+// var API_URL = "/api";
+var API_URL = "http://localhost:5003";
 
 var MasterModel = class {
     SponserList = [];

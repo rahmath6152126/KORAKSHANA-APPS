@@ -8,7 +8,7 @@ $(".tab-wizard").steps({
 	},
 	onStepChanged: function (event, currentIndex, priorIndex) {
 		$('.steps .current').prevAll().addClass('disabled');
-	},
+ DateChange();	},
 	onFinished: function (event, currentIndex) {
 		Submit(event);
 	}
@@ -26,7 +26,7 @@ $(".tab-wizard2").steps({
 	},
 	onStepChanged: function (event, currentIndex, priorIndex) {
 		$('.steps .current').prevAll().addClass('disabled');
-	},
+DateChange();	},
 	onFinished: function (event, currentIndex) {
 		$('#success-modal-btn').trigger('click');
 	}

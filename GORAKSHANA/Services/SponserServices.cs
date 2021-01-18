@@ -17,7 +17,7 @@ namespace GORAKSHANA.Services
             var database = client.GetDatabase(settings.DatabaseName);
         }
 
-        private string GenrateCode()
+        public string GenrateCode()
         {
             var len = GetList().Count() + 1;
 
@@ -41,7 +41,10 @@ namespace GORAKSHANA.Services
                 {
                     var existing = _db.Find(x => x.firstName.ToLower() == model.firstName.ToLower()).FirstOrDefault();
                     if (existing == null)
+                    {
+                        model.code=GenrateCode();
                         _db.InsertOne(model);
+                    }
                     else
                         return false;
                 }

@@ -24,35 +24,50 @@ namespace GORAKSHANA.Services
             return $"{Codeprefix}{Appefix + len}";
         }
 
-        public bool Upsert(SponserModel model)
+        public ResponseModel Upsert(SponserModel model)
         {
             try
             {
-
-                if (!string.IsNullOrEmpty(model.code))
+                var existing = new SponserModel();
+                existing = _db.Find(x => x.code == model.code).FirstOrDefault();
+                if (existing != null)
                 {
-                    var existing = _db.Find(x => x.code == model.code).FirstOrDefault();
-                    if (existing == null)
-                        return _db.ReplaceOne(x => x.code == model.code, model).IsAcknowledged;
-                    else
-                        return false;
+                    var result = _db.ReplaceOne(x => x.code == model.code, model).IsAcknowledged;
+                    return new ResponseModel()
+                    {
+                        Message = result ? "Saved Sucessfully" : "Error an update existing fields",
+                        status = result
+                    };
+                }
+                existing = _db.Find(x => x.firstName.ToLower() == model.firstName.ToLower() && x.sponser_Type.Equals(model.sponser_Type)).FirstOrDefault();
+                if (existing == null)
+                {
+                    model.code = GenrateCode();
+                    _db.InsertOne(model);
+                    return new ResponseModel()
+                    {
+                        Message = "Saved Sucessfully",
+                        status = true
+                    };
                 }
                 else
                 {
-                    var existing = _db.Find(x => x.firstName.ToLower() == model.firstName.ToLower()).FirstOrDefault();
-                    if (existing == null)
+                    return new ResponseModel()
                     {
-                        model.code=GenrateCode();
-                        _db.InsertOne(model);
-                    }
-                    else
-                        return false;
+                        Message = "Duplicate records found",
+                        status = false
+                    };
                 }
-                return true;
             }
+
+
             catch (Exception ex)
             {
-                throw ex;
+                return new ResponseModel()
+                {
+                    Message = ex.Message,
+                    status = false
+                };
             }
         }
         public Dictionary<string, List<string>> GetDataSourceTypes()

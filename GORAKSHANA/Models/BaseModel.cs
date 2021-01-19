@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace GORAKSHANA.Models
 {
-    public class BaseModel
+    public abstract class BaseModel
     {
 
         [BsonId]

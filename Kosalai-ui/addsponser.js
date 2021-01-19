@@ -208,13 +208,10 @@ var Submit = (e) => {
     })
   };
   vmSponserModel.ajaxPost(`${requestURL}/Add`, params, (res, status) => {
-    if (res === true) {
-      alert("Successfully saved");
+    alert(res.message);
+    if (res.status === true) {
       localStorage.clear();
       location.reload();
-    }
-    else {
-      alert("Error on page please check admin");
     }
   });
 

@@ -9,7 +9,7 @@ namespace GORAKSHANA.IService
 
         Dictionary<string, List<string>> GetDataSourceTypes();
 
-         bool Upsert(SponserModel model);
+          ResponseModel Upsert(SponserModel model);
 
          string GenrateCode();
     }
